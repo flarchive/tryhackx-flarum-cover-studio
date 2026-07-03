@@ -1,0 +1,96 @@
+// Cover Studio admin page — keep numeric settings compact.
+.ExtensionPage--tryhackx-cover-studio {
+  input[type='number'] {
+    max-width: 160px;
+  }
+}
+
+// "Support development" button pinned above the settings.
+.CoverStudio-support {
+  text-align: center;
+
+  .Button .icon {
+    color: #e74c3c;
+  }
+}
+
+.CoverStudio-SupportModal .Modal-body {
+  padding: 20px 24px;
+}
+
+.CoverStudio-SupportModal-description {
+  color: var(--muted-color);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+.CoverStudio-SupportModal-wallets {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.CoverStudio-SupportModal-wallet {
+  border: 1px solid var(--control-bg);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.CoverStudio-SupportModal-walletHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+
+  i {
+    font-size: 18px;
+  }
+}
+
+.CoverStudio-SupportModal-walletAddress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  code {
+    flex: 1;
+    font-size: 11px;
+    padding: 6px 10px;
+    background: var(--control-bg);
+    border-radius: 4px;
+    word-break: break-all;
+    line-height: 1.4;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    user-select: all;
+  }
+}
+
+.CoverStudio-SupportModal-copyBtn {
+  flex-shrink: 0;
+  min-width: 34px;
+  min-height: 34px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+
+  &--copied {
+    color: #2e7d32 !important;
+    background: rgba(46, 125, 50, 0.12) !important;
+  }
+}
+
+.CoverStudio-SupportModal-thanks {
+  text-align: center;
+  color: var(--muted-color);
+  font-size: 13px;
+  margin: 16px 0 0;
+  font-style: italic;
+}
