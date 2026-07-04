@@ -1,0 +1,97 @@
+tryhackx-cover-studio:
+  admin:
+    max_size_label: Maksymalny rozmiar pliku (KB)
+    max_size_help: >-
+      Górny limit dla coverów i oryginałów awatarów, w kilobajtach.
+      Uwaga: globalny limit FoF Upload również obowiązuje — wygrywa niższy
+      z dwóch limitów.
+    cover_height_label: Wysokość covera na profilu (px)
+    cover_height_help: Wysokość nagłówka profilu, gdy ustawiony jest cover.
+    cover_height_mobile_label: Wysokość covera na telefonie (px)
+    overlay_label: Nakładka poprawiająca czytelność
+    overlay_help: Ciemna warstwa nad coverem, dzięki której nazwa użytkownika i statystyki są czytelne na jasnych zdjęciach.
+    overlay_gradient: Gradient (zalecane)
+    overlay_darken: Jednolite przyciemnienie
+    overlay_none: Brak
+    show_on_popover_label: Pokazuj covery na kartach hover
+    show_on_popover_help: Wyświetla cover (lekką miniaturę) na karcie pojawiającej się po najechaniu na autora posta.
+    show_on_directory_label: Pokazuj covery w katalogu użytkowników
+    show_on_directory_help: Działa, gdy włączone jest rozszerzenie FoF User Directory.
+    media_picker_label: Pozwól wybrać cover z Moich multimediów
+    media_picker_help: Dodaje przycisk „Wybierz z Moich multimediów”, dzięki któremu można użyć wcześniej wgranych obrazów.
+    avatar_focus_label: Włącz punkt centralny awatara (pos-crop)
+    avatar_focus_help: >-
+      Wgrywany awatar zachowuje oryginalny obraz w menedżerze multimediów
+      użytkownika, a pozycję kadru można zmieniać w dowolnym momencie bez
+      ponownego wgrywania. Awatar pozostaje standardowym awatarem Flarum
+      we wszystkich miejscach.
+    default_cover_label: Domyślny cover
+    default_cover_help: Opcjonalny obraz dla użytkowników bez własnego covera. Wgrane pliki trafiają do multimediów współdzielonych. Zostaw puste, aby użyć klasycznego koloru.
+    default_avatar_label: Domyślny awatar
+    default_avatar_help: Opcjonalny obraz dla użytkowników bez awatara. Wgrane pliki trafiają do multimediów współdzielonych. Zostaw puste, aby użyć literowych awatarów Flarum.
+    default:
+      not_set: Nie ustawiono
+      set_button: Ustaw obraz
+      change_button: Zmień obraz
+      remove_button: Usuń
+      upload_button: Wgraj obraz
+      media_button: Wybierz z multimediów współdzielonych
+      save_position_button: Zapisz pozycję
+      zoom_label: Powiększenie
+      zoom_reset: Resetuj powiększenie do 1×
+      cover_title: Domyślny cover
+      avatar_title: Domyślny awatar
+      cover_empty: Brak domyślnego covera — wgraj obraz lub wybierz z multimediów współdzielonych.
+      avatar_empty: Brak domyślnego awatara — wgraj obraz lub wybierz z multimediów współdzielonych.
+      size_hint: "Maksymalny rozmiar: {max}. Obraz zachowuje pełną rozdzielczość; przeciągnij, aby wybrać widoczny obszar."
+      remove_confirm: Usunąć ten domyślny obraz? Plik pozostanie w multimediach współdzielonych.
+      picker_back: Wstecz
+      picker_empty: Brak obrazów współdzielonych. Najpierw wgraj jakiś do multimediów współdzielonych.
+      saved: Zapisano.
+      generic_error: Coś poszło nie tak. Spróbuj ponownie.
+    permission:
+      set_cover: Ustawianie własnego covera profilu
+    support:
+      button: Wesprzyj rozwój
+      title: Wesprzyj tę modyfikację
+      description: Jeśli uważasz tę modyfikację za przydatną, rozważ wsparcie jej rozwoju niewielką darowizną. Każdy wkład pomaga utrzymać projekt przy życiu.
+      copy: Kopiuj adres
+      thanks: Dziękuję za wsparcie!
+  api:
+    invalid_focus: Punkt centralny musi być liczbą od 0 do 100.
+    invalid_zoom: Powiększenie musi być liczbą od 0,5 do 4.
+    no_file: Nie przesłano żadnego obrazu.
+    unsupported_type: Ten typ pliku nie jest obsługiwany. Dozwolone formaty — JPEG, PNG, WebP, GIF.
+    no_adapter: Przesyłanie obrazów nie jest skonfigurowane na tym forum (ustawienia MIME w FoF Upload).
+    upload_failed: Nie udało się zapisać pliku. Spróbuj ponownie.
+    too_many_uploads: Wgrywasz pliki zbyt szybko. Odczekaj minutę i spróbuj ponownie.
+    file_not_eligible: Ten plik nie może zostać użyty jako cover.
+    no_default_image: Nie ma domyślnego obrazu do przesunięcia.
+    unknown_default_kind: Nieznany typ domyślnego obrazu.
+    no_cover: Nie ma covera do przesunięcia.
+    no_original: Oryginał awatara jest niedostępny — najpierw wgraj nowy awatar.
+    original_unreadable: Nie udało się odczytać oryginalnego obrazu. Wgraj nowy awatar.
+    avatar_focus_disabled: Edycja punktu centralnego awatara jest wyłączona na tym forum.
+  forum:
+    controls:
+      edit_cover: Edytuj cover
+    editor:
+      title: Cover profilu
+      empty_hint: Brak covera — wgraj obraz lub wybierz z multimediów.
+      size_hint: "Maksymalny rozmiar: {max}. Obraz zachowuje pełną rozdzielczość; przeciągnij, aby wybrać widoczny obszar."
+      drag_hint: Przeciągnij, aby zmienić pozycję; kółko myszy przybliża
+      drag_aria: Edytor pozycji obrazu. Strzałki przesuwają punkt centralny, plus i minus przybliżają.
+      zoom_label: Powiększenie
+      zoom_reset: Resetuj powiększenie do 1×
+      upload_button: Wgraj obraz
+      media_button: Wybierz z Moich multimediów
+      remove_button: Usuń
+      remove_confirm: Usunąć ten cover? Obraz pozostanie w Twoich multimediach.
+      save_position_button: Zapisz pozycję
+      saved: Zapisano.
+      generic_error: Coś poszło nie tak. Spróbuj ponownie.
+    avatar:
+      title: Pozycja awatara
+      adjust_button: Dostosuj pozycję
+      hint: Przeciągnij obraz, aby wybrać widoczny okrąg. Awatar jest przycinany z oryginału w pełnej jakości.
+      no_original: Brak obrazu źródłowego — wgraj nowy lub wybierz z multimediów, aby ustawić pozycję awatara.

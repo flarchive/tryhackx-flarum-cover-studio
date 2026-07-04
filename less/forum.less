@@ -1,0 +1,183 @@
+// ---------------------------------------------------------------------------
+// Cover rendering on UserCard surfaces (hero, hover cards, user directory)
+//
+// The image is painted by an injected .CoverStudio-cover child that carries
+// its OWN overflow clipping — the zoom transform makes the layers extend past
+// the card, but the card itself must never be clipped (overflow: hidden on
+// the card would cut off dropdown menus rendered inside the hero).
+//
+// Layering (bottom → top):
+//   .CoverStudio-cover::before        blurred fill — only visible when zoomed
+//                                     OUT (< 1×), covering the exposed bands
+//   .CoverStudio-cover::after         the sharp cover image — background-
+//                                     position carries the focal point,
+//                                     transform: scale() the zoom
+//   .CoverStudio-cover-overlay        readability overlay (mode via body
+//                                     class) — spans the FULL card, unlike
+//                                     .darkenBackground which hugs the
+//                                     bottom-pinned content on tall heroes
+//   .darkenBackground                 the actual card content
+// ---------------------------------------------------------------------------
+
+.UserCard.CoverStudio-hasCover {
+  position: relative;
+
+  // Core paints .darkenBackground with a translucent shade — disable it; the
+  // readability overlay is our full-height .CoverStudio-cover-overlay layer.
+  //
+  // Keep it positioned so it paints above the cover layers, but do NOT give it
+  // a z-index. A z-index here turns .darkenBackground into a stacking context,
+  // which traps .UserCard-controls inside it: on phones core promotes that
+  // dropdown to position:absolute; z-index:calc(var(--zindex-header) + 1) so it
+  // floats ABOVE the fixed, opaque, full-width .App-navigation bar (z-index:
+  // var(--zindex-header)) — trapped at this element's level it gets painted
+  // BEHIND that bar and disappears. The cover layers are unshift()ed ahead of
+  // .darkenBackground in the DOM, so tree order alone already paints it above
+  // them; relative positioning without a z-index is enough.
+  > .darkenBackground {
+    position: relative;
+    background: none;
+  }
+}
+
+.CoverStudio-cover {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-position: var(--cs-x, 50%) var(--cs-y, 50%);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  // Blurred backdrop for zoom-out; slightly upscaled to hide blur edges.
+  &::before {
+    background-image: none;
+    filter: blur(16px) brightness(0.85);
+    transform: scale(1.12);
+  }
+
+  // The sharp image.
+  &::after {
+    background-image: var(--cs-cover);
+    transform: scale(var(--cs-zoom, 1));
+    transform-origin: var(--cs-x, 50%) var(--cs-y, 50%);
+  }
+}
+
+.CoverStudio-zoomOut .CoverStudio-cover::before {
+  background-image: var(--cs-cover);
+}
+
+// Full-height readability overlay, above the image layers.
+.CoverStudio-cover-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+body.CoverStudio-overlay-gradient .CoverStudio-cover-overlay {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.28) 55%, rgba(0, 0, 0, 0.62) 100%);
+}
+
+body.CoverStudio-overlay-darken .CoverStudio-cover-overlay {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+body.CoverStudio-overlay-none .CoverStudio-cover-overlay {
+  background: none;
+}
+
+// The user page hero grows to the configured cover height, with the profile
+// content pinned to the bottom edge.
+.UserCard.Hero.CoverStudio-hasCover {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: var(--CoverStudio-height, 220px);
+
+  @media @phone {
+    min-height: var(--CoverStudio-height-mobile, 160px);
+  }
+}
+
+// Hover cards / directory cards keep their natural height — only the
+// background changes, so keep the text crisp.
+.UserCard--popover.CoverStudio-hasCover,
+.UserCard--directory.CoverStudio-hasCover {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+// ---------------------------------------------------------------------------
+// Default avatar (admin-configured) painted for users who have no avatar.
+//
+// Rendered as a <span class="Avatar CoverStudio-defaultAvatar"> wrapper around
+// the image: the wrapper carries the circular clip (border-radius from core's
+// .Avatar) plus overflow:hidden, so the zoom transform on the inner image is
+// contained. Focal point + zoom mirror the cover rendering exactly.
+// ---------------------------------------------------------------------------
+
+.Avatar.CoverStudio-defaultAvatar {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+
+  > img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--da-x, 50%) var(--da-y, 50%);
+  }
+
+  .CoverStudio-defaultAvatar-image {
+    transform: scale(var(--da-zoom, 1));
+    transform-origin: var(--da-x, 50%) var(--da-y, 50%);
+    will-change: transform;
+  }
+
+  // Blurred underlay behind the sharp image, shown only when zoomed out (< 1×).
+  .CoverStudio-defaultAvatar-blur {
+    filter: blur(6px) brightness(0.85);
+    transform: scale(1.15);
+  }
+}
+
+@import './editor.less';
+
+// ---------------------------------------------------------------------------
+// fof/upload media manager interop
+//
+// 1. The manager's Upload button sits 22px from the modal's top edge and its
+//    (bootstrap) tooltip opens UPWARD, rendered inside the modal — while core
+//    clips .Modal-content with overflow: hidden, so the tooltip gets cut off.
+//    Let it escape; nothing in that modal depends on the clip visually.
+// ---------------------------------------------------------------------------
+
+.fof-file-manager-modal .Modal-content {
+  overflow: visible;
+
+  // 2. We hand the modal's initial focus to this element (see mediaPicker.ts)
+  //    — no focus ring wanted on a plain container.
+  &:focus {
+    outline: none;
+  }
+}
+
+// 3. That Upload button ALWAYS shows its text label in the media manager, so
+//    the tooltip is pure duplication — and worse: the modal's focus trap
+//    auto-focuses this first tabbable control on open, popping the tooltip
+//    (trigger: hover+focus) with no pointer anywhere near it. It also sticks
+//    after a press released outside the button. Hide it entirely.
+.fof-file-manager-modal .fof-modal-buttons .tooltip {
+  display: none;
+}
