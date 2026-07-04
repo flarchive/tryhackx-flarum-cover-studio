@@ -1,0 +1,60 @@
+{
+    "name": "tryhackx/flarum-cover-studio",
+    "description": "Profile covers with repositionable focal point (pos-crop), fully integrated with FoF Upload media manager. Optional avatar focal-point editing.",
+    "keywords": [
+        "flarum",
+        "extension",
+        "profile",
+        "cover",
+        "banner",
+        "avatar",
+        "focal-point",
+        "fof-upload",
+        "media"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "TryHackX",
+            "email": "contact@tryhackx.org",
+            "homepage": "https://github.com/TryHackX"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/TryHackX/flarum-cover-studio/issues",
+        "source": "https://github.com/TryHackX/flarum-cover-studio"
+    },
+    "require": {
+        "php": "^8.3",
+        "flarum/core": "^2.0.0-rc.1",
+        "fof/upload": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "TryHackX\\CoverStudio\\": "src/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Cover Studio",
+            "category": "feature",
+            "icon": {
+                "name": "fas fa-panorama",
+                "color": "#ffffff",
+                "backgroundColor": "#6c5ce7"
+            }
+        },
+        "flarum-cli": {
+            "modules": {
+                "admin": true,
+                "forum": true,
+                "js": true,
+                "jsCommon": true,
+                "css": true
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
