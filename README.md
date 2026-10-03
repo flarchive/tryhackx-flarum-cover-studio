@@ -2,13 +2,15 @@
 
 > **Read-only archive of released versions of tryhackx/flarum-cover-studio.** Not for installation: use [Packagist](https://packagist.org/packages/tryhackx/flarum-cover-studio) or the [upstream repository](https://github.com/TryHackX/flarum-cover-studio).
 
-**0** versions archived · Latest: [`v2.2.1`](https://github.com/flarchive/tryhackx-flarum-cover-studio/tree/archive/v2.2.1) · License: `MIT` · Flarum: `^2.0.0-rc.1`
+**3** versions archived · Latest: [`v2.2.1`](https://github.com/flarchive/tryhackx-flarum-cover-studio/tree/archive/v2.2.1) · License: `MIT` · Flarum: `^2.0.0-rc.1`
 
 ## Archived Versions
 
 | Version | Released | Flarum | Source |
 |---|---|---|---|
-| — | — | — | — |
+| `v2.0.2` | 2026-07-03 | `^2.0.0-rc.1` | [Browse](https://github.com/flarchive/tryhackx-flarum-cover-studio/tree/archive/v2.0.2) |
+| `v2.1.0` | 2026-07-04 | `^2.0.0-rc.1` | [Browse](https://github.com/flarchive/tryhackx-flarum-cover-studio/tree/archive/v2.1.0) |
+| `v2.2.1` | 2026-07-04 | `^2.0.0-rc.1` | [Browse](https://github.com/flarchive/tryhackx-flarum-cover-studio/tree/archive/v2.2.1) |
 
 Catalog entry: [packages/tryhackx-flarum-cover-studio.json](https://github.com/flarchive/archive-index/blob/main/packages/tryhackx-flarum-cover-studio.json)
 
