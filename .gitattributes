@@ -1,0 +1,11 @@
+/.github export-ignore
+/js/src export-ignore
+/js/package.json export-ignore
+/js/package-lock.json export-ignore
+/js/webpack.config.js export-ignore
+/js/tsconfig.json export-ignore
+.editorconfig export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+PUBLISH.md export-ignore
+FORUM_POST.txt export-ignore

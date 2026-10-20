@@ -1,0 +1,248 @@
+// ---------------------------------------------------------------------------
+// Focal point editor (shared by cover + avatar modals)
+// ---------------------------------------------------------------------------
+
+.CoverStudio-FocusArea {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  background: var(--control-bg);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+
+  &.is-dragging {
+    cursor: grabbing;
+
+    .CoverStudio-FocusArea-hint {
+      opacity: 0;
+    }
+
+    .CoverStudio-FocusArea-grid {
+      opacity: 0.9;
+    }
+
+    .CoverStudio-FocusArea-crosshair {
+      opacity: 1;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+
+  &-image,
+  &-blur {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  &-image {
+    will-change: transform, object-position;
+  }
+
+  // Blurred underlay shown while zoomed out (< 1×) — mirrors the live cover.
+  &-blur {
+    filter: blur(16px) brightness(0.85);
+    transform: scale(1.12);
+  }
+
+  // Shown until the source image finishes downloading.
+  &-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--control-bg);
+    z-index: 2;
+  }
+
+  // Rule-of-thirds framing grid (crop-tool style); brightens while dragging.
+  &-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.3;
+    transition: opacity 0.15s ease;
+    z-index: 2;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+      linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+      linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+      linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7));
+    background-size: 1px 100%, 1px 100%, 100% 1px, 100% 1px;
+    background-position: 33.33% 0, 66.66% 0, 0 33.33%, 0 66.66%;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.6));
+  }
+
+  // Focal point marker: ring + center dot, always visible.
+  &-crosshair {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    transform: translate(-50%, -50%);
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(0, 0, 0, 0.45);
+    pointer-events: none;
+    opacity: 0.85;
+    transition: opacity 0.15s ease;
+    z-index: 3;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 4px;
+      height: 4px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45);
+    }
+  }
+
+  &-hint {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0.9;
+    transition: opacity 0.15s ease;
+    z-index: 4;
+  }
+
+  // Avatar mode: square surface with a circular viewport mask.
+  // The min() must be escaped — Flarum's PHP LESS compiler would otherwise
+  // treat it as the LESS min() function and choke on the mixed units.
+  &--circle {
+    width: ~'min(100%, 340px)';
+    aspect-ratio: 1;
+    margin: 0 auto;
+  }
+
+  &-mask {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Editor modal chrome
+// ---------------------------------------------------------------------------
+
+.CoverStudio-Editor {
+  &-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed var(--control-color);
+    border-radius: var(--border-radius);
+    color: var(--muted-color);
+    text-align: center;
+    padding: 0 20px;
+
+    p {
+      margin: 0;
+    }
+
+    &--avatar {
+      min-height: 140px;
+    }
+  }
+
+  &-sizeHint {
+    margin: 10px 0 0;
+    text-align: center;
+  }
+
+  &-zoom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+
+    label {
+      margin: 0;
+      font-size: 12px;
+      font-weight: normal;
+      color: var(--muted-color);
+      white-space: nowrap;
+    }
+
+    input[type='range'] {
+      flex: 1;
+      min-width: 0;
+      accent-color: var(--primary-color);
+    }
+  }
+
+  &-zoomValue {
+    min-width: 52px;
+    padding: 0;
+    text-align: right;
+    font-size: 12px;
+    color: var(--muted-color);
+    font-variant-numeric: tabular-nums;
+
+    &:hover {
+      color: var(--link-color);
+    }
+  }
+
+  &-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+
+    // These sit on the modal body background, where the default flat button
+    // color can be nearly invisible in some themes (both light and dark).
+    // A currentColor-derived border keeps them visible in every palette.
+    .Button {
+      background: var(--control-bg);
+      color: var(--control-color);
+      border: 1px solid ~'color-mix(in srgb, currentColor 35%, transparent)';
+
+      &:hover,
+      &:focus {
+        border-color: currentColor;
+      }
+    }
+
+    .Button--danger {
+      color: var(--alert-error-color, #d83e3e);
+    }
+  }
+
+  &-save {
+    display: flex;
+    justify-content: center;
+    margin-top: 14px;
+
+    .Button {
+      min-width: 200px;
+    }
+  }
+}
